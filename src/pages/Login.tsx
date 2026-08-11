@@ -1,5 +1,8 @@
-import type { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, type FormEvent } from 'react';
+import toast from 'react-hot-toast';
+import { Navigate, useNavigate } from 'react-router-dom';
+
+import { useAuth } from '../contexts/useAuth';
 
 const authFeatures = [
   {
@@ -21,10 +24,31 @@ const authFeatures = [
 ];
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { currentUser, login } = useAuth();
   const navigate = useNavigate();
+
+  if (currentUser) {
+    return <Navigate replace to='/' />;
+  }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!email.trim() || !password.trim()) {
+      toast.error('Unesite email adresu i lozinku.');
+      return;
+    }
+
+    const loggedInUser = login(email, password);
+
+    if (!loggedInUser) {
+      toast.error('Korisnik sa unetim podacima ne postoji.');
+      return;
+    }
+
+    toast.success(`Dobrodošli, ${loggedInUser.name}!`);
     navigate('/');
   };
 
@@ -111,11 +135,14 @@ const Login = () => {
                     ✉️
                   </span>
                   <input
+                    autoComplete='email'
                     className='w-full rounded-xl border-[1.5px] border-[#d8dce6] bg-white py-3 pr-4 pl-[42px] text-[0.95rem] text-[#0b1d3a] outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-[#8f9bb3] focus:border-[#f5a623] focus:shadow-[0_0_0_3px_rgba(245,166,35,0.15)]'
                     id='email'
                     name='email'
+                    onChange={(event) => setEmail(event.target.value)}
                     placeholder='Unesite email adresu'
                     type='email'
+                    value={email}
                   />
                 </div>
               </div>
@@ -135,11 +162,14 @@ const Login = () => {
                     🔒
                   </span>
                   <input
+                    autoComplete='current-password'
                     className='w-full rounded-xl border-[1.5px] border-[#d8dce6] bg-white py-3 pr-4 pl-[42px] text-[0.95rem] text-[#0b1d3a] outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-[#8f9bb3] focus:border-[#f5a623] focus:shadow-[0_0_0_3px_rgba(245,166,35,0.15)]'
                     id='password'
                     name='password'
+                    onChange={(event) => setPassword(event.target.value)}
                     placeholder='Unesite lozinku'
                     type='password'
+                    value={password}
                   />
                 </div>
               </div>

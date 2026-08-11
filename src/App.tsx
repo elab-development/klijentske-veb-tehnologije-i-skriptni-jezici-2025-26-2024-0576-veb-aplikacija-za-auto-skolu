@@ -1,5 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
+import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './contexts/AuthProvider';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Lessons from './pages/Lessons';
@@ -10,14 +13,55 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/lessons' element={<Lessons />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/schedule' element={<ScheduleLesson />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route path='/login' element={<Login />} />
+            <Route
+              path='/lessons'
+              element={
+                <ProtectedRoute>
+                  <Lessons />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/profile'
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/schedule'
+              element={
+                <ProtectedRoute>
+                  <ScheduleLesson />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
+      <Toaster
+        position='top-right'
+        toastOptions={{
+          duration: 2800,
+          style: {
+            borderRadius: '12px',
+            color: '#0b1d3a',
+            fontWeight: 600,
+          },
+        }}
+      />
     </>
   );
 }
