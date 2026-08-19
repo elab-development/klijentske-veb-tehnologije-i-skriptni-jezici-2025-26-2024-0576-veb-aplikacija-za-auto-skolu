@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import toast from 'react-hot-toast';
 
 import { courseCategories } from '../data/courseCategories';
@@ -9,7 +9,24 @@ import {
   getAllScheduledLessons,
   getScheduledLessonsForUser,
 } from '../services/scheduledLessonsStorage';
+import {
+  getBelgradeDailyForecast,
+  type DailyWeatherForecast,
+} from '../services/WeatherService';
 import type { LessonType, ScheduledLesson } from '../types/ScheduledLesson';
+
+type WeatherForecastState =
+  | {
+      status: 'idle' | 'loading';
+    }
+  | {
+      forecast: DailyWeatherForecast;
+      status: 'success';
+    }
+  | {
+      message: string;
+      status: 'error';
+    };
 
 const lessonTypeOptions: { label: string; value: LessonType }[] = [
   {
@@ -67,6 +84,10 @@ const ScheduleLesson = () => {
   const [time, setTime] = useState('08:00');
   const [instructorId, setInstructorId] = useState('nikola');
   const [note, setNote] = useState('');
+  const [weatherForecastState, setWeatherForecastState] =
+    useState<WeatherForecastState>({
+      status: 'idle',
+    });
   const [scheduledLessons, setScheduledLessons] = useState<ScheduledLesson[]>(
     () => (currentUser ? getScheduledLessonsForUser(currentUser.id) : []),
   );
@@ -95,6 +116,46 @@ const ScheduleLesson = () => {
         lesson.date === date && lesson.instructorId === effectiveInstructorId,
     )
     .map((lesson) => lesson.time);
+
+  useEffect(() => {
+    let isCurrentRequest = true;
+
+    const loadWeatherForecast = async () => {
+      if (!date) {
+        setWeatherForecastState({ status: 'idle' });
+        return;
+      }
+
+      setWeatherForecastState({ status: 'loading' });
+
+      try {
+        const forecast = await getBelgradeDailyForecast(date);
+
+        if (isCurrentRequest) {
+          setWeatherForecastState({
+            forecast,
+            status: 'success',
+          });
+        }
+      } catch (error) {
+        if (isCurrentRequest) {
+          setWeatherForecastState({
+            message:
+              error instanceof Error
+                ? error.message
+                : 'Vremenska prognoza trenutno nije dostupna.',
+            status: 'error',
+          });
+        }
+      }
+    };
+
+    void loadWeatherForecast();
+
+    return () => {
+      isCurrentRequest = false;
+    };
+  }, [date]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -231,6 +292,76 @@ const ScheduleLesson = () => {
                 ))}
               </select>
             </label>
+          </div>
+
+          <div className='mt-5 rounded-xl border-[1.5px] border-[#eef0f4] bg-[#f7f8fa] p-5'>
+            <div className='mb-3 flex items-center justify-between gap-3'>
+              <h3 className='font-["Syne",sans-serif] text-sm font-bold text-[#0b1d3a]'>
+                🌤️ Prognoza za Beograd
+              </h3>
+              <span className='text-xs font-semibold text-[#8f9bb3]'>
+                za izabrani datum
+              </span>
+            </div>
+
+            {weatherForecastState.status === 'idle' && (
+              <p className='text-sm leading-6 text-[#4a5568]'>
+                Izaberite datum kako bismo prikazali prognozu.
+              </p>
+            )}
+
+            {weatherForecastState.status === 'loading' && (
+              <p className='text-sm leading-6 text-[#4a5568]'>
+                Učitava se vremenska prognoza...
+              </p>
+            )}
+
+            {weatherForecastState.status === 'error' && (
+              <p className='text-sm leading-6 text-[#4a5568]'>
+                {weatherForecastState.message} Prognoza je dostupna samo za
+                narednih nekoliko dana, pa za udaljene termine proverite vreme
+                kasnije.
+              </p>
+            )}
+
+            {weatherForecastState.status === 'success' && (
+              <div className='grid gap-3 text-sm sm:grid-cols-4'>
+                <div className='rounded-lg bg-white p-3'>
+                  <div className='text-xs font-bold tracking-[0.08em] text-[#8f9bb3] uppercase'>
+                    Uslovi
+                  </div>
+                  <div className='mt-1 font-semibold text-[#0b1d3a]'>
+                    {weatherForecastState.forecast.condition}
+                  </div>
+                </div>
+                <div className='rounded-lg bg-white p-3'>
+                  <div className='text-xs font-bold tracking-[0.08em] text-[#8f9bb3] uppercase'>
+                    Temperatura
+                  </div>
+                  <div className='mt-1 font-semibold text-[#0b1d3a]'>
+                    {Math.round(weatherForecastState.forecast.temperatureMin)}°/
+                    {Math.round(weatherForecastState.forecast.temperatureMax)}°C
+                  </div>
+                </div>
+                <div className='rounded-lg bg-white p-3'>
+                  <div className='text-xs font-bold tracking-[0.08em] text-[#8f9bb3] uppercase'>
+                    Padavine
+                  </div>
+                  <div className='mt-1 font-semibold text-[#0b1d3a]'>
+                    {weatherForecastState.forecast.precipitationProbability}%
+                  </div>
+                </div>
+                <div className='rounded-lg bg-white p-3'>
+                  <div className='text-xs font-bold tracking-[0.08em] text-[#8f9bb3] uppercase'>
+                    Vetar
+                  </div>
+                  <div className='mt-1 font-semibold text-[#0b1d3a]'>
+                    {Math.round(weatherForecastState.forecast.windSpeedMax)}{' '}
+                    km/h
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className='mt-5'>
