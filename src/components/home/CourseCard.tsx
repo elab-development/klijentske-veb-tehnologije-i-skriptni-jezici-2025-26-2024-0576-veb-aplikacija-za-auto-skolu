@@ -22,8 +22,8 @@ const CourseCard = ({ course }: CourseCardProps) => {
           </p>
         </div>
       </div>
-      <div className='px-6 py-[22px]'>
-        <div className='mb-[18px] flex flex-wrap gap-4'>
+      <div className='px-6 py-5.5'>
+        <div className='mb-4.5 flex flex-wrap gap-4'>
           <span className='text-[0.82rem] text-[#4a5568]'>
             📚 {course.theoryLessons} teorij.
           </span>

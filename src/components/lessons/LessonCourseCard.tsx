@@ -21,7 +21,7 @@ const LessonCourseCard = ({ course }: LessonCourseCardProps) => {
       ].join(' ')}
     >
       <div className='flex items-center gap-4 bg-linear-to-br from-[#0b1d3a] to-[#132848] p-6'>
-        <div className='flex size-[60px] shrink-0 items-center justify-center rounded-xl border-2 border-[#f5a623]/30 bg-[#f5a623]/15 font-["Syne",sans-serif] text-[2rem] font-extrabold text-[#f5a623]'>
+        <div className='flex size-15 shrink-0 items-center justify-center rounded-xl border-2 border-[#f5a623]/30 bg-[#f5a623]/15 font-["Syne",sans-serif] text-[2rem] font-extrabold text-[#f5a623]'>
           {course.category}
         </div>
         <div>
@@ -39,8 +39,8 @@ const LessonCourseCard = ({ course }: LessonCourseCardProps) => {
         </div>
       </div>
 
-      <div className='p-[22px]'>
-        <div className='mb-[18px] grid grid-cols-2 gap-2.5 max-[480px]:grid-cols-1'>
+      <div className='p-5.5'>
+        <div className='mb-4.5 grid grid-cols-2 gap-2.5 max-[480px]:grid-cols-1'>
           <div className='rounded-md bg-[#f7f8fa] px-3 py-2.5'>
             <div className='mb-1 text-[0.72rem] font-bold tracking-[0.08em] text-[#8f9bb3] uppercase'>
               Teorija
@@ -83,7 +83,7 @@ const LessonCourseCard = ({ course }: LessonCourseCardProps) => {
             </span>
           </div>
           <button
-            className='cursor-pointer rounded-xl bg-[#f5a623] px-[18px] py-2.5 text-sm font-semibold whitespace-nowrap text-[#0b1d3a] transition hover:-translate-y-px hover:bg-[#e8961a] hover:shadow-[0_8px_20px_rgba(245,166,35,0.35)]'
+            className='cursor-pointer rounded-xl bg-[#f5a623] px-4.5 py-2.5 text-sm font-semibold whitespace-nowrap text-[#0b1d3a] transition hover:-translate-y-px hover:bg-[#e8961a] hover:shadow-[0_8px_20px_rgba(245,166,35,0.35)]'
             onClick={handleDetailsClick}
             type='button'
           >

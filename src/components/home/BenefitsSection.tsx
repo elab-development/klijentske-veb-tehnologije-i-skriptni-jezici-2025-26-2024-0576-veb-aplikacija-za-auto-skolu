@@ -27,7 +27,7 @@ const benefits = [
 
 const BenefitsSection = () => {
   return (
-    <section className='px-6 py-20 md:py-[88px]'>
+    <section className='px-6 py-20 md:py-22'>
       <div className='mx-auto max-w-6xl'>
         <div className='mx-auto mb-12 max-w-2xl text-center'>
           <div className='mb-3 inline-flex items-center gap-2 text-xs font-bold tracking-[0.12em] text-[#f5a623] uppercase before:block before:h-0.5 before:w-6 before:rounded-full before:bg-[#f5a623]'>
@@ -44,10 +44,10 @@ const BenefitsSection = () => {
         <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-4'>
           {benefits.map((benefit) => (
             <article
-              className='group relative overflow-hidden rounded-[20px] border-[1.5px] border-[#eef0f4] bg-white px-6 py-8 transition hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(11,29,58,0.12)] before:absolute before:top-0 before:left-0 before:h-[3px] before:w-full before:origin-left before:scale-x-0 before:bg-linear-to-r before:from-[#f5a623] before:to-[#ff6b35] before:transition group-hover:before:scale-x-100'
+              className='group relative overflow-hidden rounded-[20px] border-[1.5px] border-[#eef0f4] bg-white px-6 py-8 transition hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(11,29,58,0.12)] before:absolute before:top-0 before:left-0 before:h-0.75 before:w-full before:origin-left before:scale-x-0 before:bg-linear-to-r before:from-[#f5a623] before:to-[#ff6b35] before:transition group-hover:before:scale-x-100'
               key={benefit.title}
             >
-              <div className='mb-[18px] flex size-[52px] items-center justify-center rounded-xl bg-linear-to-br from-[#f5a623]/15 to-[#f5a623]/5 text-2xl'>
+              <div className='mb-4.5 flex size-13 items-center justify-center rounded-xl bg-linear-to-br from-[#f5a623]/15 to-[#f5a623]/5 text-2xl'>
                 {benefit.icon}
               </div>
               <h3 className='mb-2 font-["Syne",sans-serif] text-[1.05rem] font-bold text-[#0b1d3a]'>

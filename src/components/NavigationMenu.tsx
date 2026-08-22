@@ -51,14 +51,14 @@ const NavigationMenu = () => {
 
   return (
     <nav className='sticky top-0 z-50 border-b border-white/10 bg-[#0b1d3a] font-["DM_Sans",sans-serif]'>
-      <div className='mx-auto flex h-[68px] max-w-6xl items-center justify-between gap-6 px-5 sm:px-6'>
+      <div className='mx-auto flex h-17 max-w-6xl items-center justify-between gap-6 px-5 sm:px-6'>
         <NavLink
           className='flex shrink-0 items-center gap-2.5 font-["Syne",sans-serif] text-[1.35rem] font-extrabold text-white'
           onClick={closeMenu}
           to='/'
         >
           <span
-            className='flex size-[38px] items-center justify-center rounded-md bg-[#f5a623] text-[1.1rem]'
+            className='flex size-9.5 items-center justify-center rounded-md bg-[#f5a623] text-[1.1rem]'
             aria-hidden='true'
           >
             🚘
@@ -82,7 +82,7 @@ const NavigationMenu = () => {
         </div>
 
         <div className='flex items-center gap-3 md:hidden'>
-          <span className='hidden max-w-[140px] truncate text-sm font-semibold text-white/70 min-[420px]:block'>
+          <span className='hidden max-w-35 truncate text-sm font-semibold text-white/70 min-[420px]:block'>
             {currentUser?.name}
           </span>
           <button

@@ -10,14 +10,14 @@ const Footer = () => {
             to='/'
           >
             <span
-              className='flex size-[38px] items-center justify-center rounded-md bg-[#f5a623] text-[1.1rem]'
+              className='flex size-9.5 items-center justify-center rounded-md bg-[#f5a623] text-[1.1rem]'
               aria-hidden='true'
             >
               🚘
             </span>
             Drive<span className='text-[#f5a623]'>Pro</span>
           </Link>
-          <p className='max-w-[280px] text-sm leading-7'>
+          <p className='max-w-70 text-sm leading-7'>
             DrivePro Auto Škola - vaš pouzdani partner na putu do vozačke
             dozvole.
           </p>

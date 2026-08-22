@@ -9,7 +9,7 @@ const popularCourses = courseCategories
 
 const PopularCoursesSection = () => {
   return (
-    <section className='bg-white px-6 py-20 md:py-[88px]'>
+    <section className='bg-white px-6 py-20 md:py-22'>
       <div className='mx-auto max-w-6xl'>
         <div className='mb-12 max-w-2xl'>
           <div className='mb-3 inline-flex items-center gap-2 text-xs font-bold tracking-[0.12em] text-[#f5a623] uppercase before:block before:h-0.5 before:w-6 before:rounded-full before:bg-[#f5a623]'>
