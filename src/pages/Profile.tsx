@@ -43,8 +43,7 @@ const Profile = () => {
 
   const scheduledLessons = getScheduledLessonsForUser(currentUser.id);
   const course = courseCategories.find(
-    (courseCategory) =>
-      courseCategory.category === currentUser.drivingCategory,
+    (courseCategory) => courseCategory.category === currentUser.drivingCategory,
   );
   const instructor =
     instructors.find((item) =>
@@ -63,7 +62,7 @@ const Profile = () => {
       <div className='mx-auto grid max-w-6xl gap-7 lg:grid-cols-[320px_minmax(0,1fr)]'>
         <aside className='flex flex-col gap-5'>
           <section className='rounded-[20px] border-[1.5px] border-[#eef0f4] bg-white px-6 py-8 text-center shadow-[0_2px_8px_rgba(11,29,58,0.08)]'>
-            <div className='mx-auto mb-4 flex size-[88px] items-center justify-center rounded-full border-4 border-[#f5a623] bg-linear-to-br from-[#0b1d3a] to-[#1e3a5f] text-4xl text-white'>
+            <div className='mx-auto mb-4 flex size-22 items-center justify-center rounded-full border-4 border-[#f5a623] bg-linear-to-br from-[#0b1d3a] to-[#1e3a5f] text-4xl text-white'>
               👤
             </div>
             <h1 className='font-["Syne",sans-serif] text-xl font-bold text-[#0b1d3a]'>
@@ -98,7 +97,8 @@ const Profile = () => {
                 <div>
                   <div className='text-xs text-[#8f9bb3]'>Kategorija</div>
                   <div className='font-medium text-[#0b1d3a]'>
-                    {course?.title ?? `${currentUser.drivingCategory} Kategorija`}
+                    {course?.title ??
+                      `${currentUser.drivingCategory} Kategorija`}
                   </div>
                 </div>
               </div>
@@ -106,20 +106,18 @@ const Profile = () => {
                 <span className='w-5 text-center'>🏅</span>
                 <div>
                   <div className='text-xs text-[#8f9bb3]'>Status</div>
-                  <div className='font-medium text-[#0b1d3a]'>
-                    U toku obuke
-                  </div>
+                  <div className='font-medium text-[#0b1d3a]'>U toku obuke</div>
                 </div>
               </div>
             </div>
           </section>
 
           <section className='rounded-[20px] border-[1.5px] border-[#eef0f4] bg-white p-6 shadow-[0_2px_8px_rgba(11,29,58,0.08)]'>
-            <h2 className='mb-3.5 font-["Syne",sans-serif] text-xs font-bold tracking-[0.1em] text-[#8f9bb3] uppercase'>
+            <h2 className='mb-3.5 font-["Syne",sans-serif] text-xs font-bold tracking-widest text-[#8f9bb3] uppercase'>
               Vaš instruktor
             </h2>
             <div className='flex items-center gap-3'>
-              <div className='flex size-[50px] shrink-0 items-center justify-center rounded-full bg-linear-to-br from-[#1e3a5f] to-[#0b1d3a] text-2xl'>
+              <div className='flex size-12.5 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-[#1e3a5f] to-[#0b1d3a] text-2xl'>
                 👨
               </div>
               <div>
@@ -165,9 +163,7 @@ const Profile = () => {
                 <div className='font-["Syne",sans-serif] text-2xl font-extrabold text-[#0b1d3a]'>
                   {currentUser.completedLessons}/{currentUser.totalLessons}
                 </div>
-                <div className='mt-1 text-xs text-[#8f9bb3]'>
-                  Časovi vožnje
-                </div>
+                <div className='mt-1 text-xs text-[#8f9bb3]'>Časovi vožnje</div>
               </div>
               <div className='rounded-xl bg-[#f7f8fa] p-4 text-center'>
                 <div className='font-["Syne",sans-serif] text-2xl font-extrabold text-[#0b1d3a]'>
@@ -217,7 +213,7 @@ const Profile = () => {
                       className='flex flex-col gap-4 rounded-xl border-[1.5px] border-[#eef0f4] bg-[#f7f8fa] p-4 sm:flex-row sm:items-center'
                       key={lesson.id}
                     >
-                      <div className='w-[60px] shrink-0 rounded-md bg-[#0b1d3a] px-3 py-2 text-center text-white'>
+                      <div className='w-15 shrink-0 rounded-md bg-[#0b1d3a] px-3 py-2 text-center text-white'>
                         <div className='font-["Syne",sans-serif] text-2xl font-extrabold leading-none'>
                           {dateParts.day}
                         </div>

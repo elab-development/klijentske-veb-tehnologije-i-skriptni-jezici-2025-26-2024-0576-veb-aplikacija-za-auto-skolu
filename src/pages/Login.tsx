@@ -59,7 +59,7 @@ const Login = () => {
         aria-label='DrivePro prijava'
       >
         <aside
-          className='relative hidden flex-col items-center justify-center overflow-hidden bg-linear-[160deg,#132848_0%,#0d2445_100%] px-12 py-[60px] before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_30%_70%,rgba(245,166,35,0.12)_0%,transparent_60%)] md:flex'
+          className='relative hidden flex-col items-center justify-center overflow-hidden bg-linear-[160deg,#132848_0%,#0d2445_100%] px-12 py-15 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_30%_70%,rgba(245,166,35,0.12)_0%,transparent_60%)] md:flex'
           aria-label='Prednosti DrivePro škole'
         >
           <div
@@ -73,18 +73,18 @@ const Login = () => {
             <br />
             <span className='text-[#f5a623]'>DrivePro</span>
           </h1>
-          <p className='relative m-0 max-w-[360px] text-center text-[0.95rem] leading-[1.6] text-white/60'>
+          <p className='relative m-0 max-w-90 text-center text-[0.95rem] leading-[1.6] text-white/60'>
             Vaš pouzdani partner na putu do vozačke dozvole.
           </p>
 
-          <div className='relative mt-8 flex w-full max-w-[380px] flex-col gap-2.5'>
+          <div className='relative mt-8 flex w-full max-w-95 flex-col gap-2.5'>
             {authFeatures.map((feature) => (
               <div
                 className='flex items-center gap-2.5 text-[0.85rem] text-white/70'
                 key={feature.label}
               >
                 <div
-                  className='flex size-[30px] shrink-0 items-center justify-center rounded-[6px] bg-[#f5a623]/15 text-[0.9rem]'
+                  className='flex size-7.5 shrink-0 items-center justify-center rounded-md bg-[#f5a623]/15 text-[0.9rem]'
                   aria-hidden='true'
                 >
                   {feature.icon}
@@ -95,14 +95,14 @@ const Login = () => {
           </div>
         </aside>
 
-        <section className='flex min-h-screen items-center justify-center bg-white px-7 py-10 max-[420px]:px-5 max-[420px]:py-8 md:px-14 md:py-[60px]'>
-          <div className='w-full max-w-[440px]'>
+        <section className='flex min-h-screen items-center justify-center bg-white px-7 py-10 max-[420px]:px-5 max-[420px]:py-8 md:px-14 md:py-15'>
+          <div className='w-full max-w-110'>
             <div
               className="mb-8 flex items-center gap-2.5 font-['Syne',sans-serif] text-xl font-extrabold text-[#0b1d3a] max-[420px]:mb-7"
               aria-label='DrivePro'
             >
               <div
-                className='flex size-[34px] items-center justify-center rounded-[6px] bg-[#f5a623]'
+                className='flex size-8.5 items-center justify-center rounded-md bg-[#f5a623]'
                 aria-hidden='true'
               >
                 🚘
@@ -122,7 +122,7 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
               <div className='mb-5'>
                 <label
-                  className='mb-[7px] block text-sm font-semibold text-[#0b1d3a]'
+                  className='mb-1.75 block text-sm font-semibold text-[#0b1d3a]'
                   htmlFor='email'
                 >
                   Email adresa
@@ -136,7 +136,7 @@ const Login = () => {
                   </span>
                   <input
                     autoComplete='email'
-                    className='w-full rounded-xl border-[1.5px] border-[#d8dce6] bg-white py-3 pr-4 pl-[42px] text-[0.95rem] text-[#0b1d3a] outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-[#8f9bb3] focus:border-[#f5a623] focus:shadow-[0_0_0_3px_rgba(245,166,35,0.15)]'
+                    className='w-full rounded-xl border-[1.5px] border-[#d8dce6] bg-white py-3 pr-4 pl-10.5 text-[0.95rem] text-[#0b1d3a] outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-[#8f9bb3] focus:border-[#f5a623] focus:shadow-[0_0_0_3px_rgba(245,166,35,0.15)]'
                     id='email'
                     name='email'
                     onChange={(event) => setEmail(event.target.value)}
@@ -149,7 +149,7 @@ const Login = () => {
 
               <div className='mb-5'>
                 <label
-                  className='mb-[7px] block text-sm font-semibold text-[#0b1d3a]'
+                  className='mb-1.75 block text-sm font-semibold text-[#0b1d3a]'
                   htmlFor='password'
                 >
                   Lozinka
@@ -163,7 +163,7 @@ const Login = () => {
                   </span>
                   <input
                     autoComplete='current-password'
-                    className='w-full rounded-xl border-[1.5px] border-[#d8dce6] bg-white py-3 pr-4 pl-[42px] text-[0.95rem] text-[#0b1d3a] outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-[#8f9bb3] focus:border-[#f5a623] focus:shadow-[0_0_0_3px_rgba(245,166,35,0.15)]'
+                    className='w-full rounded-xl border-[1.5px] border-[#d8dce6] bg-white py-3 pr-4 pl-10.5 text-[0.95rem] text-[#0b1d3a] outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-[#8f9bb3] focus:border-[#f5a623] focus:shadow-[0_0_0_3px_rgba(245,166,35,0.15)]'
                     id='password'
                     name='password'
                     onChange={(event) => setPassword(event.target.value)}
@@ -175,7 +175,7 @@ const Login = () => {
               </div>
 
               <button
-                className='inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#f5a623] px-[34px] py-4 text-base font-semibold whitespace-nowrap text-[#0b1d3a] transition duration-200 hover:-translate-y-px hover:bg-[#e8961a] hover:shadow-[0_8px_20px_rgba(245,166,35,0.35)] max-[420px]:whitespace-normal'
+                className='inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#f5a623] px-8.5 py-4 text-base font-semibold whitespace-nowrap text-[#0b1d3a] transition duration-200 hover:-translate-y-px hover:bg-[#e8961a] hover:shadow-[0_8px_20px_rgba(245,166,35,0.35)] max-[420px]:whitespace-normal'
                 type='submit'
               >
                 Prijavi se

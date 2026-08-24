@@ -445,7 +445,7 @@ const ScheduleLesson = () => {
           </div>
 
           <button
-            className='mt-6 inline-flex w-full cursor-pointer items-center justify-center rounded-xl bg-[#f5a623] px-[34px] py-4 text-base font-semibold text-[#0b1d3a] transition hover:-translate-y-px hover:bg-[#e8961a] hover:shadow-[0_8px_20px_rgba(245,166,35,0.35)]'
+            className='mt-6 inline-flex w-full cursor-pointer items-center justify-center rounded-xl bg-[#f5a623] px-8.5 py-4 text-base font-semibold text-[#0b1d3a] transition hover:-translate-y-px hover:bg-[#e8961a] hover:shadow-[0_8px_20px_rgba(245,166,35,0.35)]'
             type='submit'
           >
             Potvrdi zakazivanje
