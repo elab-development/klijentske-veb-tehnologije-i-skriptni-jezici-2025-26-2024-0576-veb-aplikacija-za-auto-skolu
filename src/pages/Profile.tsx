@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { courseCategories } from '../data/courseCategories';
 import { instructors } from '../data/instructors';
 import { useAuth } from '../contexts/useAuth';
-import { getScheduledLessonsForUser } from '../services/scheduledLessonsStorage';
+import { scheduledLessonsRepository } from '../services/ScheduledLessonsRepository';
 import type { LessonType } from '../types/ScheduledLesson';
 
 const lessonTypeLabels: Record<LessonType, string> = {
@@ -41,7 +41,9 @@ const Profile = () => {
     return null;
   }
 
-  const scheduledLessons = getScheduledLessonsForUser(currentUser.id);
+  const scheduledLessons = scheduledLessonsRepository.getForUser(
+    currentUser.id,
+  );
   const course = courseCategories.find(
     (courseCategory) => courseCategory.category === currentUser.drivingCategory,
   );

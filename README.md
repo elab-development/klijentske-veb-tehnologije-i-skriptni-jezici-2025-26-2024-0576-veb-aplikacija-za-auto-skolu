@@ -1,73 +1,49 @@
-# React + TypeScript + Vite
+# DrivePro Auto Škola
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Veb aplikacija za auto školu, rađena kao seminarski rad iz predmeta
+Elektronsko poslovanje. Aplikacija omogućava kandidatima da se prijave,
+pregledaju obuke, zakažu čas vožnje i prate svoj profil.
 
-Currently, two official plugins are available:
+## Funkcionalnosti
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Prijava korisnika (email + lozinka)
+- Pregled dostupnih kategorija obuke (AM, A1, A2, A, B, C, D)
+- Filtriranje obuka po kategoriji i paginacija
+- Zakazivanje časa vožnje (kategorija, instruktor, datum, termin)
+- Prikaz vremenske prognoze za Beograd prilikom biranja datuma (Open-Meteo API)
+- Profil korisnika sa napretkom kroz obuku i listom zakazanih časova
+- Zakazani časovi i podaci o korisniku se čuvaju u localStorage-u
 
-## React Compiler
+## Tehnologije
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+React 19, TypeScript, Vite, React Router DOM, Tailwind CSS, react-hot-toast.
 
-## Expanding the ESLint configuration
+## Pokretanje projekta
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Aplikacija se posle toga otvara na `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Za produkcioni build:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+## Test nalozi
+
+- marko@drivepro.rs / marko123
+- jelena@drivepro.rs / jelena123
+- stefan@drivepro.rs / stefan123
+
+## Struktura
+
+- `src/pages` - stranice aplikacije
+- `src/components` - komponente za višekratnu upotrebu
+- `src/services` - klase za rad sa localStorage-om i API-jem
+- `src/contexts` - autentifikacija korisnika
+- `src/types` - TypeScript tipovi i interfejsi
+- `src/data` - statički podaci (obuke, instruktori, korisnici)

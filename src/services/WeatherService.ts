@@ -48,58 +48,80 @@ const weatherCodeLabels: Record<number, string> = {
   99: 'Jaka grmljavina sa gradom',
 };
 
-const getWeatherCondition = (weatherCode: number) => {
-  return weatherCodeLabels[weatherCode] ?? 'Promenljivo vreme';
-};
+/**
+ * Ugovor (interfejs) za servis koji obezbeđuje vremensku prognozu.
+ * Metoda se aktivno koristi u ScheduleLesson stranici.
+ */
+export interface IWeatherService {
+  getBelgradeDailyForecast(date: string): Promise<DailyWeatherForecast>;
+}
 
-export const getBelgradeDailyForecast = async (
-  date: string,
-): Promise<DailyWeatherForecast> => {
-  const params = new URLSearchParams({
-    daily:
-      'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max',
-    end_date: date,
-    latitude: String(belgradeCoordinates.latitude),
-    longitude: String(belgradeCoordinates.longitude),
-    start_date: date,
-    timezone: 'Europe/Belgrade',
-  });
+/**
+ * Implementacija IWeatherService interfejsa koja povlači podatke
+ * sa javnog Open-Meteo API-ja za grad Beograd.
+ */
+export class WeatherService implements IWeatherService {
+  async getBelgradeDailyForecast(date: string): Promise<DailyWeatherForecast> {
+    const params = new URLSearchParams({
+      daily:
+        'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max',
+      end_date: date,
+      latitude: String(belgradeCoordinates.latitude),
+      longitude: String(belgradeCoordinates.longitude),
+      start_date: date,
+      timezone: 'Europe/Belgrade',
+    });
 
-  const response = await fetch(
-    `https://api.open-meteo.com/v1/forecast?${params.toString()}`,
-  );
+    const response = await fetch(
+      `https://api.open-meteo.com/v1/forecast?${params.toString()}`,
+    );
 
-  if (!response.ok) {
-    throw new Error('Vremenska prognoza trenutno nije dostupna.');
+    if (!response.ok) {
+      throw new Error('Vremenska prognoza trenutno nije dostupna.');
+    }
+
+    const data = (await response.json()) as OpenMeteoDailyResponse;
+
+    return this.mapResponseToForecast(data);
   }
 
-  const data = (await response.json()) as OpenMeteoDailyResponse;
-  const daily = data.daily;
-  const weatherCode = daily?.weather_code?.[0];
-  const temperatureMax = daily?.temperature_2m_max?.[0];
-  const temperatureMin = daily?.temperature_2m_min?.[0];
-  const precipitationProbability = daily?.precipitation_probability_max?.[0];
-  const windSpeedMax = daily?.wind_speed_10m_max?.[0];
-  const forecastDate = daily?.time?.[0];
-
-  if (
-    forecastDate === undefined ||
-    weatherCode === undefined ||
-    temperatureMax === undefined ||
-    temperatureMin === undefined ||
-    precipitationProbability === undefined ||
-    windSpeedMax === undefined
-  ) {
-    throw new Error('Nema prognoze za izabrani datum.');
+  private getWeatherCondition(weatherCode: number): string {
+    return weatherCodeLabels[weatherCode] ?? 'Promenljivo vreme';
   }
 
-  return {
-    condition: getWeatherCondition(weatherCode),
-    date: forecastDate,
-    precipitationProbability,
-    temperatureMax,
-    temperatureMin,
-    weatherCode,
-    windSpeedMax,
-  };
-};
+  private mapResponseToForecast(
+    data: OpenMeteoDailyResponse,
+  ): DailyWeatherForecast {
+    const daily = data.daily;
+    const weatherCode = daily?.weather_code?.[0];
+    const temperatureMax = daily?.temperature_2m_max?.[0];
+    const temperatureMin = daily?.temperature_2m_min?.[0];
+    const precipitationProbability = daily?.precipitation_probability_max?.[0];
+    const windSpeedMax = daily?.wind_speed_10m_max?.[0];
+    const forecastDate = daily?.time?.[0];
+
+    if (
+      forecastDate === undefined ||
+      weatherCode === undefined ||
+      temperatureMax === undefined ||
+      temperatureMin === undefined ||
+      precipitationProbability === undefined ||
+      windSpeedMax === undefined
+    ) {
+      throw new Error('Nema prognoze za izabrani datum.');
+    }
+
+    return {
+      condition: this.getWeatherCondition(weatherCode),
+      date: forecastDate,
+      precipitationProbability,
+      temperatureMax,
+      temperatureMin,
+      weatherCode,
+      windSpeedMax,
+    };
+  }
+}
+
+// Jedinstvena instanca (singleton) koja se koristi kroz celu aplikaciju.
+export const weatherService = new WeatherService();

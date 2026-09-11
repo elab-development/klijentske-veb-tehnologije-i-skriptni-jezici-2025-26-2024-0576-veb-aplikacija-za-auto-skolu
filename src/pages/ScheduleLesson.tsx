@@ -4,13 +4,9 @@ import toast from 'react-hot-toast';
 import { courseCategories } from '../data/courseCategories';
 import { instructors } from '../data/instructors';
 import { useAuth } from '../contexts/useAuth';
+import { scheduledLessonsRepository } from '../services/ScheduledLessonsRepository';
 import {
-  addScheduledLesson,
-  getAllScheduledLessons,
-  getScheduledLessonsForUser,
-} from '../services/scheduledLessonsStorage';
-import {
-  getBelgradeDailyForecast,
+  weatherService,
   type DailyWeatherForecast,
 } from '../services/WeatherService';
 import type { LessonType, ScheduledLesson } from '../types/ScheduledLesson';
@@ -89,7 +85,10 @@ const ScheduleLesson = () => {
       status: 'idle',
     });
   const [scheduledLessons, setScheduledLessons] = useState<ScheduledLesson[]>(
-    () => (currentUser ? getScheduledLessonsForUser(currentUser.id) : []),
+    () =>
+      currentUser
+        ? scheduledLessonsRepository.getForUser(currentUser.id)
+        : [],
   );
 
   const availableInstructors = useMemo(
@@ -110,7 +109,8 @@ const ScheduleLesson = () => {
     (instructor) => instructor.id === effectiveInstructorId,
   );
 
-  const bookedSlots = getAllScheduledLessons()
+  const bookedSlots = scheduledLessonsRepository
+    .getAll()
     .filter(
       (lesson) =>
         lesson.date === date && lesson.instructorId === effectiveInstructorId,
@@ -129,7 +129,7 @@ const ScheduleLesson = () => {
       setWeatherForecastState({ status: 'loading' });
 
       try {
-        const forecast = await getBelgradeDailyForecast(date);
+        const forecast = await weatherService.getBelgradeDailyForecast(date);
 
         if (isCurrentRequest) {
           setWeatherForecastState({
@@ -175,7 +175,7 @@ const ScheduleLesson = () => {
       return;
     }
 
-    const scheduledLesson = addScheduledLesson(currentUser.id, {
+    const scheduledLesson = scheduledLessonsRepository.add(currentUser.id, {
       category,
       date,
       instructorId: effectiveInstructorId,
